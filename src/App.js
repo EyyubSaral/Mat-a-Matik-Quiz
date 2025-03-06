@@ -201,8 +201,13 @@ export default function App() {
         Not: Görevi tamamlamak için *sadece* aşağıdaki return deyiminin içine küçük bir kod yazmanız gerekmektedir. Bu veya başka bir dosyada yazmanız gereken başka bir kod yok
 */
   useEffect(() => {
-    setAnswerStatus(false);
-  }, 2000);
+    if (answerStatus) {
+      const timeout = setTimeout(() => {
+        setAnswerStatus("");
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [answerStatus]);
   return (
     <div className="wrapper">
       {!gameStarted && <h1>Mat-a-Matik</h1>}
